@@ -77,7 +77,12 @@ class Mining(object):
                                         candidate_block.nonce,
                                         candidate_block.tx_set)
 
+                ###Pikan
                 print('successfully mined new block#' + str(Block._BlockHeight))
+
+                candidate_block._broadcast_block()
+                print('broadcast block#'+str(Block._BlockHeight))
+                ###
 
             # Add to UTXOsets and myUTXOsets(for coinbase transaction only)
             ############################################################################################################

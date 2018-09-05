@@ -89,6 +89,9 @@ def generate_transaction(receiver, amount, commission):
     # Add to memoryPool
     Transaction.Insert_MemoryPool(keccak_hash.hexdigest().encode(), in_counter, vin, out_counter, vout)
 
+    #broadcast Tx 
+    
+
     return True
 
 

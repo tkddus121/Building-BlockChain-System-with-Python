@@ -5,6 +5,7 @@ import socketserver
 # CLP
 import multiprocessing
 
+from blockchain import Blockchain
 
 class _PeerRequestHandler(socketserver.BaseRequestHandler):
 
@@ -17,7 +18,6 @@ class _PeerRequestHandler(socketserver.BaseRequestHandler):
         peer = self.server.peer
 
         print(msg_str)
-
         if msg_type == 'MINE':
             # Call mine func
             peer.mine(msg_obj['data'])
@@ -43,14 +43,15 @@ class _PeerRequestHandler(socketserver.BaseRequestHandler):
             pass
         self.request.sendall(response.encode('utf-8'))
 
+
 class Peer(object):
 
     def __init__(self, host='127.0.0.1', port=5000):
         self.host = host
         self.port = port
-        self._peers = set() 
-        #self._chain = Blockchain()
- 
+        self._peers = set()
+        self._chain = Blockchain()
+
     def start(self):
         server = socketserver.ThreadingTCPServer(
             (self.host, self.port), _PeerRequestHandler)
@@ -77,6 +78,7 @@ class Peer(object):
         self._add_peers(json.loads(peers))
         self._request_connection()
         #self._broadcast_chain()
+
         
     # replace chain function need to be coded.
     def replace_chain(self, chain):
@@ -152,4 +154,3 @@ class Peer(object):
             s.sendall(json.dumps(message).encode('utf-8'))
             response = s.recv(655350, 0)
             return response.decode('utf-8')
-
