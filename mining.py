@@ -7,7 +7,7 @@ from block import Block
 from key import Key
 from transaction import Transaction
 from utxo import UTXOset
-
+from peer import Peer
 
 # Class for Mining
 ########################################################################################################################

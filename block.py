@@ -253,8 +253,19 @@ class Block(object):
       
         # have to 
         pp = (('127.0.0.1',5003),('127.0.0.1',5002))
+        peers = set()
+        f= open('peers.txt','r')
+        s = f.read()
+        l = s.split()
+        lenl= int( int(len(l)) / 2 )
+        for i in range(0,lenl):
+            port = int(l.pop())
+            host = l.pop()
+            peers.add((host,port))
 
-        for (host, port) in pp:
+        print(peers)
+
+        for (host, port) in peers:
             results.append(pool.apply_async(
                 self._send_message, args=(host, port, message)))
         pool.close()

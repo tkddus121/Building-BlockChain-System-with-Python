@@ -45,6 +45,7 @@ class _PeerRequestHandler(socketserver.BaseRequestHandler):
 
 class Peer(object):
 
+    #ppeer = set()
     def __init__(self, host='127.0.0.1', port=5000):
         self.host = host
         self.port = port
@@ -61,6 +62,8 @@ class Peer(object):
         except KeyboardInterrupt as _:
             server.server_close()
 
+
+
     # connect new peer.
     def connect_to_peer(self, host, port):
         if (host, port) in self._peers:
@@ -73,6 +76,13 @@ class Peer(object):
 
         '''
         self._peers.add((host, port))
+        #Peer.ppeer.add((host,port))
+        # peers to txt
+        f = open('peers.txt','a',encoding='utf-8')
+        line = host+' '+str(port)+'\n'
+        f.write(line)
+        f.close()
+
         peers = self._request_peers(host, port)
         self._add_peers(json.loads(peers))
         self._request_connection()
